@@ -62,7 +62,7 @@ def compute_IP_wrt_direction(helix, primary_vertex, jet_direction, debug = False
     the linearized track and the primary vertex.
 
     debug option prints some important variables while running the code.
-
+    
     In the code you can find a few comments with the names of the variables
     used in the ALEPH note.
     """
@@ -174,27 +174,22 @@ def compute_IP(helix, primary_vertex, jet_direction):
     helix.impact_parameter = helix.vector_impact_parameter.Mag() * helix.sign_impact_parameter
 
 
-from ROOT import TCanvas, TGraph, TLine
+from ROOT import TCanvas, TGraph, TEllipse, TLine
 class vertex_displayer(object):
     """Debug class for displaying vertices, tracks and impact parameters on the transverse plane, based on ROOT classes.
     """
 
-    def __init__(self, name, title, lenght, time_min, time_max, helix, n_points = 100, ip_algorithm = 'complex'):
+    def __init__(self, name, title, lenght, time_min, time_max, helix ):
         """
         Constructor providing:
         name: string used to identify ROOT objects
         title: string used as title of canvases and graphs
-        lenght: half of the axis dimension
-        time_min and time_max: defining the time interval for which the track is shown
-        helix: helix object to be shown; having the ip attributes is mandatory
-        n_points: number of points that show the track
-        ip_algorithm: if 'complex' it shows also the distance of
-        closest approach to the jet direction, and the linearized track at
-        that point. It requires to have run the function compute_IP_wrt_direction
-        on the helix object.
+        lenght:
+        time_min and time_max:
+        helix:
         """
         self.helix = helix
-        self.ip_algorithm = ip_algorithm
+
 
         self.gr_transverse = TGraph()
         self.gr_transverse.SetNameTitle("g_tr_" + name, title)
@@ -208,21 +203,45 @@ class vertex_displayer(object):
         self.gr_transverse.GetXaxis().SetTitle("X axis")
         self.gr_transverse.GetYaxis().SetTitle("Y axis")
 
-        # Origin
+        # Drawing track
+        # origin
         self.gr_transverse.SetPoint(5, helix.origin.X(), helix.origin.Y())
+        # point_min = helix.point_at_time(time_min)
+        # point_max = helix.point_at_time(time_max)
+        # self.gr_transverse.SetPoint(6, point_min.X(), point_min.Y())
+        # self.gr_transverse.SetPoint(7, point_max.X(), point_max.Y())
 
-        # Track
+        # self.gr_transverse.SetPoint(6, helix.center_xy.X(), helix.center_xy.Y())
+        # rho_min, z_min, phi_min = helix.polar_at_time(time_min)
+        # rho_max, z_max, phi_max = helix.polar_at_time(time_max)
+        # self.ell_transverse = TEllipse(helix.center_xy.X(), helix.center_xy.Y(), helix.rho, helix.rho,
+        # 0, 360, 0)
+        # #self.ell_transverse = TEllipse(helix.center_xy.X(), helix.center_xy.Y(), helix.rho, helix.rho, phi_min* 180 / math.pi, phi_max* 180 / math.pi, 0)
+        # self.ell_transverse.SetLineColor(4)
+        # self.ell_transverse.SetFillStyle(0)
+
         self.ell_transverse = TGraph()
         self.ell_transverse.SetNameTitle("g_ellipse_" + name, title)
         self.ell_transverse.SetMarkerStyle(7)
         self.ell_transverse.SetMarkerColor(1)
-
+        n_points = 100
         for i in range(n_points):
             time_coord = time_min + i*(time_max-time_min)/n_points
             point = helix.point_at_time(time_coord)
             self.ell_transverse.SetPoint(i, point.X(), point.Y())
 
-        # Jet direction
+        # Linearized_track
+        lin_track_x1 = self.helix.linearized_track.origin.X() - lenght * self.helix.linearized_track.direction.X()
+        lin_track_x2 = self.helix.linearized_track.origin.X() + lenght * self.helix.linearized_track.direction.X()
+        lin_track_y1 = self.helix.linearized_track.origin.Y() - lenght * self.helix.linearized_track.direction.Y()
+        lin_track_y2 = self.helix.linearized_track.origin.Y() + lenght * self.helix.linearized_track.direction.Y()
+
+        self.lin_track = TLine(lin_track_x1, lin_track_y1, lin_track_x2, lin_track_y2)
+        self.lin_track.SetLineColor(2)
+        self.lin_track.SetLineStyle(9)
+        self.lin_track.SetLineWidth(2)
+
+        # Jet_dir
         jet_dir_x1 = self.helix.primary_vertex.X() - lenght * self.helix.jet_direction.X()
         jet_dir_x2 = self.helix.primary_vertex.X() + lenght * self.helix.jet_direction.X()
         jet_dir_y1 = self.helix.primary_vertex.Y() - lenght * self.helix.jet_direction.Y()
@@ -233,7 +252,20 @@ class vertex_displayer(object):
         self.jet_dir.SetLineStyle(1)
         self.jet_dir.SetLineWidth(1)
 
-        # Impact Parameter D
+        # D_j: vector from S_j to S_t
+
+        jet_track_distance_x1 = self.helix.jet_point_min_approach.X()
+        jet_track_distance_y1 = self.helix.jet_point_min_approach.Y()
+        jet_track_distance_x2 = self.helix.point_min_approach.X()
+        jet_track_distance_y2 = self.helix.point_min_approach.Y()
+
+        self.jet_track_distance = TLine(jet_track_distance_x1, jet_track_distance_y1, jet_track_distance_x2, jet_track_distance_y2)
+        self.jet_track_distance.SetLineColor(3)
+        self.jet_track_distance.SetLineStyle(3)
+        self.jet_track_distance.SetLineWidth(4)
+
+        # D
+
         impact_parameter_x1 = self.helix.primary_vertex.X()
         impact_parameter_y1 = self.helix.primary_vertex.Y()
         impact_parameter_x2 = self.helix.vector_impact_parameter.X()
@@ -244,38 +276,9 @@ class vertex_displayer(object):
         self.impact_parameter.SetLineStyle(6)
         self.impact_parameter.SetLineWidth(4)
 
-        if self.ip_algorithm == 'complex':
-            # Linearized_track
-            lin_track_x1 = self.helix.linearized_track.origin.X() - lenght * self.helix.linearized_track.direction.X()
-            lin_track_x2 = self.helix.linearized_track.origin.X() + lenght * self.helix.linearized_track.direction.X()
-            lin_track_y1 = self.helix.linearized_track.origin.Y() - lenght * self.helix.linearized_track.direction.Y()
-            lin_track_y2 = self.helix.linearized_track.origin.Y() + lenght * self.helix.linearized_track.direction.Y()
-
-            self.lin_track = TLine(lin_track_x1, lin_track_y1, lin_track_x2, lin_track_y2)
-            self.lin_track.SetLineColor(2)
-            self.lin_track.SetLineStyle(9)
-            self.lin_track.SetLineWidth(2)
-
-            # Jet-track distance D_j: vector from S_j to S_t
-            jet_track_distance_x1 = self.helix.jet_point_min_approach.X()
-            jet_track_distance_y1 = self.helix.jet_point_min_approach.Y()
-            jet_track_distance_x2 = self.helix.point_min_approach.X()
-            jet_track_distance_y2 = self.helix.point_min_approach.Y()
-
-            self.jet_track_distance = TLine(jet_track_distance_x1, jet_track_distance_y1, jet_track_distance_x2, jet_track_distance_y2)
-            self.jet_track_distance.SetLineColor(3)
-            self.jet_track_distance.SetLineStyle(3)
-            self.jet_track_distance.SetLineWidth(4)
 
     def draw(self):
-        """Draw the canvas showing the transverse plane to the beam axis.
-
-        In particular it shows the x-y axis, the track, the jet direction and
-        the impact parameter.
-        If the ip_algorithm 'complex' is enabled it also shows the distance of
-        closest approach to the jet direction, and the linearized track at
-        that point.
-        """
+        """Draw the canvas """
 
         self.c_transverse = TCanvas("c_tr_" + self.name, self.title, 800, 600)
         self.c_transverse.cd()
@@ -283,8 +286,6 @@ class vertex_displayer(object):
         self.gr_transverse.Draw("AP")
         self.ell_transverse.Draw("same LP")
         self.jet_dir.Draw("same")
+        self.lin_track.Draw("same")
+        self.jet_track_distance.Draw("same")
         self.impact_parameter.Draw("same")
-
-        if self.ip_algorithm == 'complex':
-            self.lin_track.Draw("same")
-            self.jet_track_distance.Draw("same")

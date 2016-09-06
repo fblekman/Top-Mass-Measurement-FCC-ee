@@ -5,7 +5,8 @@ import numpy
 class ComputeMVA(object):
     """Perform a multivariate analysis based on the rarity algorithm.
 
-    Rarirty is a MVA algorithm that, thanks to its simplicity, provide you with a fast MVA which doesn't suffer of overtraining. The algorithm compute the p
+    Rarirty is a MVA algorithm that, thanks to its simplicity,
+    provide you with a fast MVA which doesn't suffer of overtraining. The algorithm compute the p
 
     Here is an example:
 
