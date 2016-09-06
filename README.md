@@ -13,7 +13,7 @@ If you do not the FCC code yet, please follow this twiki:
 
 ##To use the code please run:
 
-  sh ./init.sh
+  source ./init.sh
 
 This makes available for you the analyzers scripts in your PYTHONPATH.
 
