@@ -1,5 +1,7 @@
-'''
-'''
+"""ttbar signal analysis.
+
+
+"""
 
 import os
 import copy
@@ -34,7 +36,10 @@ source = cfg.Analyzer(
     gen_vertices = 'GenVertex'
 )
 
-from sequences.PapasSequence_ILD import papas_sequence, detector, papas
+if detector_name == "ILD":
+    from sequences.PapasSequence_ILD import papas_sequence, detector, papas
+elif detector_name == "CMS":
+    from sequences.PapasSequence_CMS import papas_sequence, detector, papas
 
 from sequences.MatchingMCSequence import matching_mc_sequence
 
@@ -103,13 +108,13 @@ if __name__ == '__main__':
             display.draw()
 
     iev = None
-    usage = '''usage: python ee_tt_analysis_cfg.py [ievent]
+    usage = """usage: python ee_tt_analysis_cfg.py [ievent]
 
     Provide ievent as an integer, or loop on the first events.
     You can also use this configuration file in this way:
 
     heppy_loop.py OutDir/ ee_tt_analysis_cfg.py -f -N 100
-    '''
+    """
     if len(sys.argv)==2:
         papas.display = True
         try:

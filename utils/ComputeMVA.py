@@ -12,9 +12,10 @@ class ComputeMVA(object):
     that are going to be used in the computation.
 
     Basically the program calculates, for each event (both signal and background),
-    the normalized number of background events that have 
+    the normalized number of background events that have
 
     Here is an example:
+    
 
 
     """
