@@ -3,10 +3,16 @@ from cebefo_style import cebefo_style
 import numpy
 
 class ComputeMVA(object):
-    """Perform a multivariate analysis based on the rarity algorithm.
+    """Perform a multivariate analysis based on a simple algorithm.
 
-    Rarirty is a MVA algorithm that, thanks to its simplicity,
-    provide you with a fast MVA which doesn't suffer of overtraining. The algorithm compute the p
+    This MVA algorithm, thanks to its simplicity, provides you with
+    a fast MVA which doesn't suffer of overtraining.
+
+    The algorithm needs a background and a signal tree, and a list of variables
+    that are going to be used in the computation.
+
+    Basically the program calculates, for each event (both signal and background),
+    the normalized number of background events that have 
 
     Here is an example:
 

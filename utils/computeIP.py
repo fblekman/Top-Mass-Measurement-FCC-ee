@@ -3,7 +3,6 @@ from ROOT import TVector3, TLorentzVector
 from scipy.optimize import minimize_scalar
 from numpy import sign
 
-
 class straight_line(object):
     """Simple class describing a straight line, based on ROOT TVector3 class.
 
@@ -17,13 +16,11 @@ class straight_line(object):
     def __init__(self, origin, direction):
         """Simple constructor with 2 TVector3 objects, origin and direction
         (which is then normalized)."""
-
         self.origin = origin
         self.direction = direction.Unit()
 
     def point_at_parameter(self, par):
         """Returns the point (TVector3 object) at a certain value of the parameter parametrizing the line."""
-
         return self.origin + par * self.direction
 
     def distance_from_point(self, point):
@@ -32,7 +29,6 @@ class straight_line(object):
 
         The result is of the form: w = origin + alpha*direction - point
         """
-
         alpha = self.direction.Dot( ( point - self.origin ) )
         w =  self.point_at_parameter(alpha) - point
         return w
@@ -40,7 +36,6 @@ class straight_line(object):
 
 def velocity_at_time(helix, time):
     """Given a helix object, compute the velocity vector at a given time"""
-
     v_x = helix.v_over_omega.Y() * math.sin(helix.omega*time) * helix.omega \
         + helix.v_over_omega.X() * math.cos(helix.omega*time) * helix.omega
     v_y = - helix.v_over_omega.X() * math.sin(helix.omega*time) * helix.omega \
@@ -57,7 +52,8 @@ def compute_IP_wrt_direction(helix, primary_vertex, jet_direction, debug = False
     The function computes the IP and all the other quantities and store these as attributes of the helix object.
 
     This version of the impact parameter is more complicated than the common one,
-    because it computes firstly the minimum approach between the helix and the jet    direction, then the track is linearized at this point, and the impact
+    because it computes firstly the minimum approach between the helix and the jet
+    direction, then the track is linearized at this point, and the impact
     parameter is computed as the closest approach between
     the linearized track and the primary vertex.
 
@@ -66,7 +62,6 @@ def compute_IP_wrt_direction(helix, primary_vertex, jet_direction, debug = False
     In the code you can find a few comments with the names of the variables
     used in the ALEPH note.
     """
-
     helix.primary_vertex = primary_vertex    # primary_vertex = v
     helix.jet_direction = jet_direction      # jet_direction = j
     helix.jet_line = straight_line(helix.primary_vertex, helix.jet_direction)
@@ -76,12 +71,12 @@ def compute_IP_wrt_direction(helix, primary_vertex, jet_direction, debug = False
         jet_track_vector = helix.jet_line.distance_from_point(helix_point)
         return jet_track_vector.Mag()
 
-    helix.min_approach = minimize_scalar(jet_track_distance, \
-                                        bracket = None, \
+    helix.min_approach = minimize_scalar(jet_track_distance,
+                                        bracket = None,
                                         bounds = [-1e-11, 1e-11],
-                                        args=(), \
-                                        method='bounded', \
-                                        tol=None, \
+                                        args=(),
+                                        method='bounded',
+                                        tol=None,
                                         options={'disp': 0, 'maxiter': 1e5, 'xatol': 1e-20} )
     helix.min_approach_time = helix.min_approach.x
 
@@ -150,7 +145,6 @@ def compute_IP(helix, primary_vertex, jet_direction):
     helix point of closest approach), the sign and the IP (that is the magnitude
     of the vector IP with the proper sign) as attributes of the helix object.
     """
-
     helix.primary_vertex = primary_vertex
     helix.jet_direction = jet_direction.Unit()
 
@@ -159,12 +153,12 @@ def compute_IP(helix, primary_vertex, jet_direction):
         pr_vertex_track_vector = helix_point - helix.primary_vertex
         return pr_vertex_track_vector.Mag()
 
-    helix.min_approach = minimize_scalar(pr_vertex_track_distance, \
-                                        bracket = None, \
-                                        bounds = [-1e-11, 1e-11], \
-                                        args=(), \
-                                        method='bounded', \
-                                        tol=None, \
+    helix.min_approach = minimize_scalar(pr_vertex_track_distance,
+                                        bracket = None,
+                                        bounds = [-1e-11, 1e-11],
+                                        args=(),
+                                        method='bounded',
+                                        tol=None,
                                         options={'disp': 0, 'maxiter': 1e5, 'xatol': 1e-20} )
     helix.min_approach_time = helix.min_approach.x
 
@@ -239,19 +233,29 @@ class vertex_displayer(object):
         impact_parameter_x2 = self.helix.vector_impact_parameter.X()
         impact_parameter_y2 = self.helix.vector_impact_parameter.Y()
 
-        self.impact_parameter = TLine(impact_parameter_x1, impact_parameter_y1, impact_parameter_x2, impact_parameter_y2)
+        self.impact_parameter = TLine(impact_parameter_x1,
+                                      impact_parameter_y1,
+                                      impact_parameter_x2,
+                                      impact_parameter_y2)
         self.impact_parameter.SetLineColor(4)
         self.impact_parameter.SetLineStyle(6)
         self.impact_parameter.SetLineWidth(4)
 
         if self.ip_algorithm == 'complex':
             # Linearized_track
-            lin_track_x1 = self.helix.linearized_track.origin.X() - lenght * self.helix.linearized_track.direction.X()
-            lin_track_x2 = self.helix.linearized_track.origin.X() + lenght * self.helix.linearized_track.direction.X()
-            lin_track_y1 = self.helix.linearized_track.origin.Y() - lenght * self.helix.linearized_track.direction.Y()
-            lin_track_y2 = self.helix.linearized_track.origin.Y() + lenght * self.helix.linearized_track.direction.Y()
+            lin_track_x1 = self.helix.linearized_track.origin.X() \
+                         - lenght * self.helix.linearized_track.direction.X()
+            lin_track_x2 = self.helix.linearized_track.origin.X() \
+                         + lenght * self.helix.linearized_track.direction.X()
+            lin_track_y1 = self.helix.linearized_track.origin.Y() \
+                         - lenght * self.helix.linearized_track.direction.Y()
+            lin_track_y2 = self.helix.linearized_track.origin.Y() \
+                         + lenght * self.helix.linearized_track.direction.Y()
 
-            self.lin_track = TLine(lin_track_x1, lin_track_y1, lin_track_x2, lin_track_y2)
+            self.lin_track = TLine(lin_track_x1,
+                                   lin_track_y1,
+                                   lin_track_x2,
+                                   lin_track_y2)
             self.lin_track.SetLineColor(2)
             self.lin_track.SetLineStyle(9)
             self.lin_track.SetLineWidth(2)
@@ -262,7 +266,10 @@ class vertex_displayer(object):
             jet_track_distance_x2 = self.helix.point_min_approach.X()
             jet_track_distance_y2 = self.helix.point_min_approach.Y()
 
-            self.jet_track_distance = TLine(jet_track_distance_x1, jet_track_distance_y1, jet_track_distance_x2, jet_track_distance_y2)
+            self.jet_track_distance = TLine(jet_track_distance_x1,
+                                            jet_track_distance_y1,
+                                            jet_track_distance_x2,
+                                            jet_track_distance_y2)
             self.jet_track_distance.SetLineColor(3)
             self.jet_track_distance.SetLineStyle(3)
             self.jet_track_distance.SetLineWidth(4)
@@ -276,7 +283,6 @@ class vertex_displayer(object):
         closest approach to the jet direction, and the linearized track at
         that point.
         """
-
         self.c_transverse = TCanvas("c_tr_" + self.name, self.title, 800, 600)
         self.c_transverse.cd()
         self.c_transverse.SetGrid()

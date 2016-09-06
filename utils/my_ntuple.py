@@ -1,4 +1,5 @@
 #!/bin/env python
+"""Book and fill functions specialized for e+e- collision and top mass analysis."""
 
 def var( tree, varName, type=float ):
     tree.var(varName, type)
@@ -6,8 +7,7 @@ def var( tree, varName, type=float ):
 def fill( tree, varName, value ):
     tree.fill( varName, value )
 
-# simple p4
-
+# Simple p4
 def bookMyP4( tree, pName ):
     var(tree, '{pName}_e'.format(pName=pName))
     var(tree, '{pName}_px'.format(pName=pName))
@@ -26,8 +26,7 @@ def fillMyP4( tree, pName, p4 ):
     fill(tree, '{pName}_phi'.format(pName=pName), p4.phi() )
     fill(tree, '{pName}_m'.format(pName=pName), p4.m() )
 
-# simple particle
-
+# Simple particle
 def bookMyParticle( tree, pName ):
     var(tree, '{pName}_pdgid'.format(pName=pName))
     bookMyP4(tree, pName)
@@ -37,7 +36,6 @@ def fillMyParticle( tree, pName, particle ):
     fillMyP4(tree, pName, particle )
 
 # jet
-
 def bookComponent( tree, pName ):
     var(tree, '{pName}_e'.format(pName=pName))
     var(tree, '{pName}_pt'.format(pName=pName))
@@ -47,7 +45,6 @@ def fillComponent(tree, pName, component):
     fill(tree, '{pName}_e'.format(pName=pName), component.e() )
     fill(tree, '{pName}_pt'.format(pName=pName), component.pt() )
     fill(tree, '{pName}_num'.format(pName=pName), component.num() )
-
 
 pdgids = [211, 22, 130, 11, 13]
 
@@ -59,6 +56,12 @@ def bookMyJet( tree, pName ):
     var(tree, '{pName}_btag'.format(pName = pName))
     var(tree, '{pName}_logbtag'.format(pName = pName))
     var(tree, '{pName}_log10btag'.format(pName = pName))
+
+    var(tree, '{pName}_n_signif_larger3'.format(pName = pName))
+    var(tree, '{pName}_m_inv_signif_larger3'.format(pName = pName))
+    var(tree, '{pName}_angle_wrt_jet_dir_larger'.format(pName = pName))
+    var(tree, '{pName}_combined_b_tag'.format(pName = pName))
+
     var(tree, '{pName}_mc_b_quark_index'.format(pName = pName))
 
 def fillMyJet( tree, pName, jet ):
@@ -74,11 +77,19 @@ def fillMyJet( tree, pName, jet ):
         fill(tree, '{pName}_logbtag'.format(pName = pName), jet.logbtag)
         fill(tree, '{pName}_log10btag'.format(pName = pName), jet.log10btag)
 
+    if hasattr(jet, 'n_signif_larger3'):
+        fill(tree, '{pName}_n_signif_larger3'.format(pName = pName), jet.n_signif_larger3)
+        fill(tree, '{pName}_m_inv_signif_larger3'.format(pName = pName), jet.m_inv_signif_larger3)
+        fill(tree, '{pName}_angle_wrt_jet_dir_larger'.format(pName = pName), jet.angle_wrt_jet_dir_larger)
+
+    if hasattr(jet, 'combined_b_tag'):
+        fill(tree, '{pName}_combined_b_tag'.format(pName = pName), jet.combined_b_tag)
+
     if hasattr(jet, 'mc_b_quark_index'):
         fill(tree, '{pName}_mc_b_quark_index'.format(pName = pName), jet.mc_b_quark_index)
 
 
-# isolation
+# Isolation
 iso_pdgids = [211, 22, 130]
 
 def bookMyIso(tree, pName):
@@ -91,7 +102,8 @@ def fillMyIso(tree, pName, iso):
     fill(tree, '{pName}_num'.format(pName=pName), iso.num )
     fill(tree, '{pName}_pt_wrt_lepton'.format(pName=pName), iso.pt_wrt_lepton )
 
-# LEPTON
+
+# Lepton
 def bookMyLepton( tree, pName, pflow=True ):
     bookMyParticle(tree, pName )
     if pflow:
@@ -99,7 +111,6 @@ def bookMyLepton( tree, pName, pflow=True ):
             bookMyIso(tree, '{pName}_iso{pdgid:d}'.format(pName=pName, pdgid=pdgid))
     bookMyIso(tree, '{pName}_iso'.format(pName=pName))
     var(tree, '{pName}_match_with_mc'.format(pName=pName))
-
 
 def fillMyLepton( tree, pName, lepton ):
     fillMyParticle(tree, pName, lepton )
@@ -113,8 +124,7 @@ def fillMyLepton( tree, pName, lepton ):
         fill(tree, '{pName}_match_with_mc'.format(pName=pName), lepton.match_with_mc)
 
 
-
-# MC B QUARK
+# Mc b quark
 def bookMCbQuark(tree, pName):
     bookMyP4(tree, pName)
     var(tree, '{pName}_index_nearest_jet'.format(pName=pName) )
@@ -128,7 +138,7 @@ def fillMCbQuark(tree, pName, quark):
     fillMyJet(tree, '{pName}_nearest_jet'.format(pName=pName), quark.nearest_jet )
 
 
-# JETS VARIABLE
+# Jets Variable
 def bookJetsInvariantMasses(tree):
     var(tree, 'four_jets_mass')
     var(tree, 'min_jets_mass')
@@ -141,7 +151,7 @@ def fillJetsInvariantMasses(tree, event):
         fill(tree, 'second_min_jets_mass', event.second_min_jets_mass)
 
 
-# MISSING ENERGY
+# Missing Energy
 def bookMissingEnergy(tree):
     bookMyP4(tree, 'missing_sim')
     bookMyP4(tree, 'missing_rec')
@@ -152,7 +162,8 @@ def fillMissingEnergy(tree, event):
     if hasattr(event, 'missing_rec'):
         fillMyP4(tree, 'missing_rec', event.missing_rec)
 
-# TOP CONSTRAINER
+
+# Top Constrainer
 def bookTopConstrainer(tree):
     var(tree, 'success')
     var(tree, 'chi2_algorithm')

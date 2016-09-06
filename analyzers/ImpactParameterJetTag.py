@@ -56,7 +56,6 @@ class ImpactParameterJetTag(Analyzer):
 
         The smearing is made with a gaussian variable with mean = 0 and sigma = resolution; in addition the smearing is applied to the x' and y' component of the IP, that are the component in a frame in which the vector IP lies on the x'y' plane.
         """
-
         resolution = self.cfg_ana.resolution(ptc)
         ptc.path.ip_resolution = resolution
 
@@ -84,7 +83,6 @@ class ImpactParameterJetTag(Analyzer):
 
         If the track has negative significance, the probability as it had positive significance is assigned, but with the negative sign.
         """
-
         def gaussian(x):
             return math.exp((-0.5)*x**2)
 
@@ -104,8 +102,7 @@ class ImpactParameterJetTag(Analyzer):
         - log10btag: log_10(btag), it's easier to compare with other works if you use this variable
 
         If a jet doesn't contain any track with positive significance, btag = 1 is assigned.
-         """
-
+        """
         logtag = 0.
         n_track = 0
         log_prob_product = 0.
@@ -138,7 +135,6 @@ class ImpactParameterJetTag(Analyzer):
 
         If no track inside the jet passes this selection, it returns 0, 0, 0.
         """
-
         track_list = []
 
         for id, ptcs in jet.constituents.iteritems():
