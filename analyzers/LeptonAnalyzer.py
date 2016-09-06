@@ -1,7 +1,6 @@
 from heppy.framework.analyzer import Analyzer
 from utils.isolation import IsolationComputer, IsolationInfo
 
-
 pdgids = [211, 22, 130]
 
 class LeptonAnalyzer(Analyzer):

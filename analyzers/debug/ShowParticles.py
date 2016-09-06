@@ -1,5 +1,4 @@
 from heppy.framework.analyzer import Analyzer
-from heppy.particles.tlv.particle import Particle
 
 class ShowParticles(Analyzer):
 

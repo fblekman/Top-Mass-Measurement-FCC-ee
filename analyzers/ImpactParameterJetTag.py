@@ -161,12 +161,11 @@ class ImpactParameterJetTag(Analyzer):
         if hasattr(self.cfg_ana, 'mva_bg_tree'):
             my_file = TFile(self.cfg_ana.mva_filename, "OPEN")
             my_tree = my_file.Get(self.cfg_ana.mva_treename)
-            mva_variables = [
-                "jet_logbtag",
-                "jet_n_signif_larger3",
-                "jet_m_inv_signif_larger3",
-                "jet_angle_wrt_jet_dir_larger3"
-                ]
+            mva_variables = ["jet_logbtag",
+                             "jet_n_signif_larger3",
+                             "jet_m_inv_signif_larger3",
+                             "jet_angle_wrt_jet_dir_larger3"]
+
             self.b_tag_mva = ComputeMVA(mva_variables,
                                         my_tree.CopyTree(self.cfg_ana.mva_background_selection),
                                         my_tree.CopyTree(self.cfg_ana.mva_signal_selection)
@@ -192,10 +191,9 @@ class ImpactParameterJetTag(Analyzer):
             jet.n_signif_larger3, jet.m_inv_signif_larger3, jet.angle_wrt_jet_dir_larger3 = self.jet_attributes(jet,3,1)
 
             if hasattr(self, 'b_tag_mva'):
-                jet_mva_variables = [
-                    jet.logbtag,
-                    jet.n_signif_larger3,
-                    jet.m_inv_signif_larger3,
-                    jet.angle_wrt_jet_dir_larger
-                    ]
+                jet_mva_variables = [jet.logbtag,
+                                     jet.n_signif_larger3,
+                                     jet.m_inv_signif_larger3,
+                                     jet.angle_wrt_jet_dir_larger]
+
                 jet.combined_b_tag = self.b_tag_mva.ComputePvalue(jet_mva_variables)

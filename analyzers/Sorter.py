@@ -2,9 +2,8 @@ from heppy.framework.analyzer import Analyzer
 
 debug = False
 
-
 class Sorter(Analyzer):
-    '''WRITEEEE
+    '''
     Example:
     from analyzers.Sorter import Sorter
     sort_iso_leptons = cfg.Analyzer(

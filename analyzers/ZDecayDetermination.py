@@ -1,8 +1,6 @@
 from heppy.framework.analyzer import Analyzer
-from heppy.particles.tlv.particle import Particle
 
 class ZDecayDetermination(Analyzer):
-
     '''
     from analyzers.ZDecayDetermination import ZDecayDetermination
     zed_decay_determination = cfg.Analyzer(

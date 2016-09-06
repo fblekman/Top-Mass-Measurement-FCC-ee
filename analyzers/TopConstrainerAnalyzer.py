@@ -9,7 +9,6 @@ w_charge = 1
 top_charge = 0.66
 
 class TopConstrainerAnalyzer(Analyzer):
-
     '''Builds w and top resonances using kineamatic constraint.
     Example:
     from TopConstrainerAnalyzer import TopConstrainerAnalyzer

@@ -1,7 +1,6 @@
 from heppy.framework.analyzer import Analyzer
 from heppy.particles.tlv.resonance import Resonance
 
-
 class ZedBuilder(Analyzer):
     '''
     from analyzers.ZedBuilder import ZedBuilder
@@ -21,7 +20,6 @@ class ZedBuilder(Analyzer):
     )
 
     '''
-
 
     def process(self, event):
         gen_particles_stable_and_neutrinos = getattr(event, self.cfg_ana.gen_particles_stable_and_neutrinos)

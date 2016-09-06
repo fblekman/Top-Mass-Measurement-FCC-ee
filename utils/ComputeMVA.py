@@ -16,8 +16,6 @@ class ComputeMVA(object):
 
     Here is an example:
 
-
-
     """
 
     def __init__(self, variables_list, background_tree_training, signal_tree_training, n_max = 1e10, verbosity = 0):
