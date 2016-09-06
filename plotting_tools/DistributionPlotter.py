@@ -2,7 +2,11 @@ from ROOT import TH1D, THStack, TCanvas, TFile, TTree, TLegend, kFALSE
 from plotting_tools.TopMassStyle import TopMassStyle
 
 class DistributionPlotter:
-
+    """
+    #TODO: add entry method also directly with dataset class
+    #TODO: check correct rescaling of data set with cuts
+    """
+    
     def __init__(self, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm = False, logy = False, stack = False, set_title = True):
 
         TopMassStyle()
@@ -107,7 +111,7 @@ class DistributionPlotter:
         self.leg.Draw("same")
         self.canvas.Update()
 
-    #TODO: add entry method also directly with dataset class
+
 
     def save_pdf(self, dir_name):
         self.canvas.Print(dir_name + self.name + ".pdf", "pdf")
