@@ -15,7 +15,7 @@ class ComputeMVA(object):
     the normalized number of background events that have
 
     Here is an example:
-    
+
 
 
     """
@@ -71,21 +71,16 @@ class ComputeMVA(object):
     def ComputePvalue(self, point):
 
         cut_string = ""
-
-        for i, variable in enumerate(self.variables_list):
-            if self.variables_signs[i] == 1:
+        string_list = []
+        for variable, variable_sign in zip(variables_list, variables_signs):
+            if variable_sign == 1:
                 sign = ">="
-            elif self.variables_signs[i] == -1:
+            elif variable_sign == -1:
                 sign = "<="
-            if i != 0:
-                cut_string += " && {}".format(variable) + sign + "{}".format(point[i])
-            else:
-                cut_string += "{}".format(variable) + sign + "{}".format(point[i])
-            if self.verbosity >=3:
-                print
-                print "cut_string, iteration {}".format(i)
-                print cut_string
-                print
+            string_list.append(variable + sign + str(point[i]))
+
+        join_cuts = " && "
+        cut_string = join_cuts.join(string_list)
 
         if self.verbosity >=2:
             print
@@ -93,7 +88,8 @@ class ComputeMVA(object):
             print cut_string
             print
 
-        pvalue = float( self.background_tree_training.GetEntries(cut_string) ) / self.background_tree_training.GetEntries()
+        pvalue = float( self.background_tree_training.GetEntries(cut_string) )\
+                      / self.background_tree_training.GetEntries()
 
         if self.verbosity >=1:
             print pvalue

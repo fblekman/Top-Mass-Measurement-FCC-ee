@@ -121,24 +121,30 @@ lines = []
 
 begin_line = "\\begin{table}\n"
 starting_line = "\\begin{tabular}{c"
-first_line = "cut"
-generator_line = "Generator"
-for i, name in enumerate(names):
+first_line_string_list = ["cut"]
+generator_line_string_list = ["Generator"]
+for name, generator in zip(names, generators):
     starting_line += "|c"
-    first_line += " & " + name + " [\%]"
-    generator_line += " & " + generators[i]
+    first_line_string_list.append(name + " [\%]")
+    generator_line_string_list.append(generator)
 starting_line += "}\n"
+first_line = " & ".join(first_line_string_list)
 first_line += "\\\\ \n"
+generator_line = " & ".join(generator_line_string_list)
 generator_line += "\\\\ \n"
 
 
 lines += [begin_line, starting_line, first_line, generator_line]
 
 
-lines.append( "Generated events" )
-for i, eff_file in enumerate(eff_files):
-    lines[-1] += " & {}".format( int(eff_file[0][1][37:]) )
-lines[-1] += "\\\\ \n"
+aux_string_list = ["Generated events"]
+for eff_file in eff_files:
+    print eff_file[0][1]
+    print reduce(lambda x, y: x + " " + y, eff_file[0][1].split()[:-1])
+
+    print eff_file[0][1].split()[-1]
+    aux_string_list.append(eff_file[0][1].split()[-1])
+lines.append(" & ".join(aux_string_list) + "\\\\ \n"
 
 # lines.append("None")
 # for tree in trees:
@@ -146,10 +152,11 @@ lines[-1] += "\\\\ \n"
 # lines[-1] += "\\\\ \n"
 
 for j, counter_line in enumerate(eff_files[0]):
-    lines.append( counter_line[1][1:25].replace("&&", "and") )
-    for i, eff_file in enumerate(eff_files):
-        lines[-1] += " & {:.3f}".format( eff_file[j][3] )
-    lines[-1] += "\\\\ \n"
+    aux_line_string_list = []
+    aux_line_string_list.append( reduce(lambda x, y: x + " " + y, counter_line[1].split()[:-1]).replace("&&", "and") )
+    for eff_file in eff_files:
+        aux_line_string_list.append("{:.3f}".format( eff_file[j][3] ))
+    lines.append(" & ".join(aux_line_string_list) + "\\\\ \n")
 
 for i, cut in enumerate(cuts):
     lines.append(cut.replace("_", "\_"))

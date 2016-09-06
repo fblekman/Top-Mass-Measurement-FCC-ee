@@ -73,7 +73,7 @@ for i, cut in enumerate(cuts):
 
 
 
-class DataSet:
+class DataSet(object):
     def __init__(self, name, legend_name, cross_section, luminosity, efficiency = True):
         self.file = TFile("ntuple_used/{}_ILD/tree.TreeTTSemilep.TreeTTSemilep_1/tree.root".format(name),"OPEN")
         self.tree = self.file.Get("events")

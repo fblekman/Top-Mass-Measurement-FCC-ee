@@ -1,0 +1,23 @@
+\begin{table}
+\begin{tabular}{c|c|c|c|c|c|c}
+Generator & Pythia8 & Pythia8 & Pythia8 & Pythia8 & Pythia8 & Madgraph\\ 
+Generated events & 47625 & 47889 & 49306 & 4800 & 28511 & 9687\\ 
+four_jets_mass > 150 & 4756 & 1555 & 2427 & 372 & 423 & 6277\\ 
+four_jets_mass < 270 & 3044 & 892 & 2427 & 25 & 320 & 6269\\ 
+min_jets_mass > 10 & 2914 & 737 & 1905 & 25 & 235 & 6268\\ 
+min_jets_mass < 90 & 2914 & 737 & 1905 & 25 & 235 & 6267\\ 
+second_min_jets_mass > 20 & 2871 & 702 & 1635 & 25 & 202 & 6266\\ 
+second_min_jets_mass < 100 & 2866 & 702 & 1635 & 23 & 202 & 6262\\ 
+lep1_e < 100 & 2756 & 630 & 1635 & 23 & 170 & 6260\\ 
+missing_rec_e > 20 & 2694 & 573 & 1635 & 23 & 170 & 6260\\ 
+missing_rec_e < 150 & 2667 & 557 & 1571 & 23 & 167 & 6253\\ 
+n_rec_charged >= 20 & 2418 & 427 & 1383 & 23 & 100 & 6245\\ 
+n_rec_charged >= 10 & 2418 & 427 & 1383 & 23 & 100 & 6245\\ 
+chi2_top_constrainer <= 40 & 2259 & 375 & 1374 & 20 & 96 & 6238\\ 
+success == 1 & 1332 & 186 & 521 & 14 & 51 & 5325\\ 
+\end{tabular} 
+\caption{Selection cuts yields}
+\end{table} 
+
+
+
