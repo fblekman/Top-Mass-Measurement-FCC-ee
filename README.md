@@ -5,7 +5,8 @@ Work in progress!
 
 The analysis is based on the FCC Software Framework, please source the FCC code before using this code.
 
-link
+http://github.com - automatic!
+[GitHub](http://github.com)
 
 Please initialize the code:
   sh ./init.sh
