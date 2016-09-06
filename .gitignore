@@ -1,3 +1,9 @@
+##### ignore picture and ntuples
+*.root
+*.pdf
+*.png
+*.eps
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -178,3 +184,4 @@ TSWLatexianTemp*
 
 # KBibTeX
 *~[0-9]*
+
