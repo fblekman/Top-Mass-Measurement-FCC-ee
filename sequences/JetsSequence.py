@@ -50,9 +50,9 @@ def jets_sequence(number_jets, detector_name):
             momentum = ptc.p3().Mag()
             return math.sqrt(25.**2 + 95.**2/ (momentum**2) )*1e-6
 
-        from analyzers.ImpactParameterSimple import ImpactParameterSimple
+        from analyzers.ImpactParameterJetTag import ImpactParameterJetTag
         ip_simple = cfg.Analyzer(
-            ImpactParameterSimple,
+            ImpactParameterJetTag,
             jets = 'jets',
             method = 'simple',
             track_selection = track_selection_function,
@@ -65,9 +65,9 @@ def jets_sequence(number_jets, detector_name):
             theta = ptc.p4().Theta()
             return math.sqrt(5.**2 + 10**2/ (momentum**2 * math.sin(theta)**3 ) )*1e-6
 
-        from analyzers.ImpactParameterSimple import ImpactParameterSimple
+        from analyzers.ImpactParameterJetTag import ImpactParameterJetTag
         ip_simple = cfg.Analyzer(
-            ImpactParameterSimple,
+            ImpactParameterJetTag,
             jets = 'jets',
             method = 'simple',
             track_selection = track_selection_function,
