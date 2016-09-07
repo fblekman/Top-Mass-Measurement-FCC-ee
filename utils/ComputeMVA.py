@@ -1,5 +1,5 @@
 from ROOT import TTree, TFile, TH1D, TCanvas, gDirectory, TGraph, TLegend, kFALSE
-from cebefo_style import cebefo_style
+from TopMassStyle import TopMassStyle
 import numpy
 
 class ComputeMVA(object):
@@ -219,7 +219,7 @@ class ComputeMVA(object):
 
 if __name__ == '__main__':
 
-    cebefo_style()
+    TopMassStyle()
 
     # analysis = "tt"
     analysis = "b-tag"
