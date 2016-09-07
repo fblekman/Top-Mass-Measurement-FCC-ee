@@ -1,7 +1,7 @@
 import heppy.framework.config as cfg
 
 def top_constrainer_sequence(cdm_energy):
-    from analyzers.TopConstrainerAnalyzer import TopConstrainerAnalyzer
+    from utils.TopConstrainerAnalyzer import TopConstrainerAnalyzer
     top_constrainer = cfg.Analyzer(
       TopConstrainerAnalyzer,
       jets = 'jets',
