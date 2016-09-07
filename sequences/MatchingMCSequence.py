@@ -22,14 +22,14 @@ gen_matching = cfg.Analyzer(
     delta_r = 0.01
 )
 
-from analyzers.ShowParticles import ShowParticles
+from analyzers.debug.ShowParticles import ShowParticles
 show_particles = cfg.Analyzer(
     ShowParticles,
     gen_particles = 'gen_particles',
     rec_particles = 'rec_particles',
 )
 
-from analyzers.ShowMatching import ShowMatching
+from analyzers.debug.ShowMatching import ShowMatching
 show_matching = cfg.Analyzer(
     ShowMatching,
     rec_particles = 'rec_particles',

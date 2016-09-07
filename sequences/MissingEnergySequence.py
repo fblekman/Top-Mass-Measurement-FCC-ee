@@ -16,7 +16,7 @@ def missing_energy_sequence(cdm_energy):
         to_remove = 'rec_particles'
     )
 
-    from analyzers.TotalEnergy import TotalEnergy
+    from analyzers.debug.TotalEnergy import TotalEnergy
     total_energy = cfg.Analyzer(
       TotalEnergy,
       gen_particles_stable_and_neutrinos = 'gen_particles_stable_and_neutrinos',
@@ -24,7 +24,7 @@ def missing_energy_sequence(cdm_energy):
       rec_particles = 'rec_particles',
     )
 
-    from analyzers.ChargeAndNeutralEnergy import ChargeAndNeutralEnergy
+    from analyzers.debug.ChargeAndNeutralEnergy import ChargeAndNeutralEnergy
     charge_neutral_energy = cfg.Analyzer(
         ChargeAndNeutralEnergy,
         rec_particles = 'rec_particles',
