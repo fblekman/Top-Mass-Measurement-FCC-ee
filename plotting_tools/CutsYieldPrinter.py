@@ -2,8 +2,18 @@ from ROOT import TFile
 from numpy import genfromtxt
 
 class CutsYieldPrinter(object):
+    """Generate LaTeX code for a table with the yields of a list of cut on a list of dataset.
+
+    It integrates with the DataSet Class.
+    The class contains a lot of methods to generate the various lines of the table code;
+    these are of course very customizable.
+
+    TODO: print table method?
+    """
 
     def __init__(self, dataset_list, cut_list, caption = None):
+        """ Constructor with a list of DataSet objects, a list of cut (string format),
+        and possibly a caption."""
         self.lines = []
         self.dataset_list = dataset_list
         self.cut_list = cut_list

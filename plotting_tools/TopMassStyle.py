@@ -1,7 +1,7 @@
 from ROOT import TROOT, TStyle, gStyle
 
 def TopMassStyle():
-
+    """Set the style plot in order to create fancier plots!"""
     gStyle.SetPadTickX(1);
     gStyle.SetPadTickY(1);
     gStyle.SetHistLineWidth(3);

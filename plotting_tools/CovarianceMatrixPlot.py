@@ -2,7 +2,11 @@ import numpy as np
 from ROOT import TEllipse, TCanvas, TGraph, TLegend
 
 def covarianceMatrixEllipse(covarianceMatrix, probability=0.683):
+    """Plot ellipse with a given cl from a 2x2 covariance matrix.
 
+    TODO: better to create a class to store all the information and fastly plot
+    within the class?
+    """
     k = np.sqrt(-2*np.log(1-probability))
 
 
@@ -23,6 +27,12 @@ def covarianceMatrixEllipse(covarianceMatrix, probability=0.683):
     return ellipse, scale
 
 def combineCova(cova1,cova2):
+    """Combine two covariance matrices.
+
+    The arguments must be numpy 2-D array.
+    
+    TODO: extend to a list of covariance matrices?
+    """
     inv1 = np.linalg.inv(cova1)
     inv2 = np.linalg.inv(cova2)
     aux = inv1+inv2

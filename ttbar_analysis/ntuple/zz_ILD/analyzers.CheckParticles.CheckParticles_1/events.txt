@@ -1,6 +1,0 @@
-Counter events :
-	 All events                                   47867 	 1.00 	 1.0000
-	 1 lepton                                      3576 	 0.07 	 0.0747
-	 4 particles                                  44074 	 12.32 	 0.9208
-	 1 lepton && 4 particles                       3108 	 0.07 	 0.0649
-

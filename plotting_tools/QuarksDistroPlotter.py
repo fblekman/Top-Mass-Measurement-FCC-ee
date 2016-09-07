@@ -1,8 +1,11 @@
 from ROOT import TH1D, TCanvas, TFile, TTree, TLegend, kFALSE
+from plotting_tools.TopMassStyle import TopMassStyle
 
-class QuarksDistroPlotter:
+class QuarksDistroPlotter(object):
 
     def __init__(self, tree, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm = True, logy = False, set_title = True):
+
+        TopMassStyle()
 
         # tree
         self.tree = tree
@@ -59,7 +62,9 @@ class QuarksDistroPlotter:
         self.h_uu.Draw("same")
         self.leg.Draw("same")
 
-        maxs = [self.h_uu.GetBinContent(self.h_uu.GetMaximumBin()), self.h_cc.GetBinContent(self.h_cc.GetMaximumBin()), self.h_bb.GetBinContent(self.h_bb.GetMaximumBin()) ]
+        maxs = [self.h_uu.GetBinContent(self.h_uu.GetMaximumBin()),
+                self.h_cc.GetBinContent(self.h_cc.GetMaximumBin()),
+                self.h_bb.GetBinContent(self.h_bb.GetMaximumBin()) ]
         self.h_bb.SetMaximum(1.2*max(maxs))
 
         self.c_qq.Update()
