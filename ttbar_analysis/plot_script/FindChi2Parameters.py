@@ -1,7 +1,12 @@
 from ROOT import TFile, TCanvas, TH1D
-from cebefo_style import cebefo_style
+from TopMassStyle import TopMassStyle
 
 class PlotVariable:
+    """Plot the distribution of a variable for different data samples.
+
+    Previous class wrt to DistributionPlotter, probably can be replaced.
+    TODO: replace this class.
+    """
 
     def __init__(self, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm = False, logy = False, set_title = True):
 
@@ -50,7 +55,7 @@ class PlotVariable:
     def write(self):
         self.canvas.Write()
 
-cebefo_style()
+TopMassStyle()
 
 save = False
 detector = "ILD"

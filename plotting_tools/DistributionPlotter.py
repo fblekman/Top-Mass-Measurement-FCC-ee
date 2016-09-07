@@ -2,8 +2,12 @@ from ROOT import TH1D, THStack, TCanvas, TFile, TTree, TLegend, kFALSE
 from plotting_tools.TopMassStyle import TopMassStyle
 
 class DistributionPlotter(object):
-    """
-    #TODO: add entry method also directly with dataset class
+    """Class to plot distribution of variables with various options.
+
+    After initializing the class you can add a variable number of datasets uising
+    the add_entry method. A new dataset is automatically drawn in top of the others.
+
+    #TODO: integration with the DataSet class!
     #TODO: check correct rescaling of data set with cuts
     """
 

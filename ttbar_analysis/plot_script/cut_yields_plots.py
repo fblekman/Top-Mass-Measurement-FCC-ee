@@ -61,7 +61,7 @@ distributions = []
 selection = " && ".join(cuts)
 
 four_jets_mass = DistributionPlotter("four_jets_mass",
-                                     selection,
+                                     "",
                                      "four_jets_mass_{}".format(detector),
                                      48, 0, 340,
                                      "Hadronic Mass @{}".format(detector),
@@ -73,6 +73,20 @@ four_jets_mass = DistributionPlotter("four_jets_mass",
 for data_set in data_sets:
     four_jets_mass.add_entry(data_set.tree, data_set.name + "_four_jets_mass", data_set.legend_name, data_set.n_event)
 distributions.append(four_jets_mass)
+
+min_jets_mass = DistributionPlotter("min_jets_mass",
+                                     "",
+                                     "min_jets_mass_{}".format(detector),
+                                     48, 0, 340,
+                                     "Min Jets Mass @{}".format(detector),
+                                     "Min Jets mass [GeV]", "GeV",
+                                     norm = True,
+                                     logy = False,
+                                     stack = False,
+                                     set_title = True)
+for data_set in data_sets:
+    min_jets_mass.add_entry(data_set.tree, data_set.name + "_min_jets_mass", data_set.legend_name, data_set.n_event)
+distributions.append(min_jets_mass)
 
 chi2_top_constrainer = DistributionPlotter("chi2_top_constrainer",
                                            selection,

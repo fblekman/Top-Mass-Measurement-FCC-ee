@@ -6,16 +6,19 @@ class ComputeMVA(object):
     """Perform a multivariate analysis based on a simple algorithm.
 
     This MVA algorithm, thanks to its simplicity, provides you with
-    a fast MVA which doesn't suffer of overtraining.
+    a quite fast MVA which doesn't suffer of overtraining.
 
     The algorithm needs a background and a signal tree, and a list of variables
     that are going to be used in the computation.
 
     Basically the program calculates, for each event (both signal and background),
-    the normalized number of background events that have
+    the normalized number of background events that have all the values of the
+    varaibles larger or equal than the event (that is the number of background events that look like signal more than the considered event). This is the generalization of the p-value in a given number of dimensions, wrt to the background
+    distribution.
+    This variable is the discriminating variable between signal and background,
+    and can be transformed in a flat variable for bg and a variable peaked at 0 for signal.
 
-    Here is an example:
-
+    You can find a few examples in the __main__ part.
     """
 
     def __init__(self, variables_list, background_tree_training, signal_tree_training, n_max = 1e10, verbosity = 0):
@@ -68,7 +71,6 @@ class ComputeMVA(object):
 
     def ComputePvalue(self, point):
 
-        cut_string = ""
         string_list = []
         for variable, variable_sign in zip(variables_list, variables_signs):
             if variable_sign == 1:

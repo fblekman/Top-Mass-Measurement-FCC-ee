@@ -2,6 +2,11 @@ from ROOT import TH1D, TCanvas, TFile, TTree, TLegend, kFALSE
 from plotting_tools.TopMassStyle import TopMassStyle
 
 class QuarksDistroPlotter(object):
+    """Perform plot to show the distribution of the variables for the three
+    different families of quark (uds, c and b).
+
+    TODO: can all this code be included in the DistributionPlotter class?
+    """
 
     def __init__(self, tree, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm = True, logy = False, set_title = True):
 
