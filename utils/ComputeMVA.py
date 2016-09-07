@@ -1,5 +1,5 @@
 from ROOT import TTree, TFile, TH1D, TCanvas, gDirectory, TGraph, TLegend, kFALSE
-from plotting_tools.TopMassStyle import plotting_tools.TopMassStyle
+from plotting_tools.TopMassStyle import TopMassStyle
 import numpy
 
 class ComputeMVA(object):
