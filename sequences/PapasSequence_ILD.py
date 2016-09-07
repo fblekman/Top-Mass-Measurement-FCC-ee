@@ -21,7 +21,7 @@ gen_particles_stable = cfg.Analyzer(
 )
 
 from heppy.analyzers.PapasSim import PapasSim
-from heppy.papas.detectors.ILD_mod import ILD
+from detectors.ILD_mod import ILD
 detector = ILD()
 
 

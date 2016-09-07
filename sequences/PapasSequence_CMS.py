@@ -22,7 +22,7 @@ gen_particles_stable = cfg.Analyzer(
 )
 
 from heppy.analyzers.PapasSim import PapasSim
-from heppy.papas.detectors.CMS_mod import CMS
+from detectors.CMS_mod import CMS
 detector = CMS()
 
 def is_energy(ptc):

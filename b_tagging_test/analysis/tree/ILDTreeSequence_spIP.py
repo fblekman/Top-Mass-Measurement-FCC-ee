@@ -27,6 +27,7 @@ def ild_resolution(ptc):
 ip_simple_ild = cfg.Analyzer(
     ImpactParameterSimple,
     jets = 'jets',
+    method = 'simple',
     resolution = ild_resolution,
     track_selection = track_selection_function
 )

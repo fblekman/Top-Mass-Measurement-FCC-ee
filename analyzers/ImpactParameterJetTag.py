@@ -75,6 +75,10 @@ class ImpactParameterJetTag(Analyzer):
         ptc.path.significance_impact_parameter = ptc.path.smeared_impact_parameter / ptc.path.ip_resolution
         ptc.path.track_probability = self.track_probability(ptc)
 
+        if self.cfg_ana.method == 'complex':
+            ptc.path.min_dist_to_jet_significance = ptc.path.sign_impact_parameter\
+                                                    * ptc.path.min_dist_to_jet.Mag()\
+                                                    / ptc.path.ip_resolution
 
     def track_probability(self, particle):
         """Compute the probability that the track comes from the primary vertex according to the resolution.

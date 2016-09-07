@@ -25,6 +25,7 @@ def aleph_resolution(ptc):
 ip_simple_aleph = cfg.Analyzer(
     ImpactParameterSimple,
     jets = 'jets',
+    method = 'simple',
     resolution = aleph_resolution,
     track_selection = track_selection_function
 )

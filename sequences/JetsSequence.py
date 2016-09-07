@@ -54,6 +54,7 @@ def jets_sequence(number_jets, detector_name):
         ip_simple = cfg.Analyzer(
             ImpactParameterSimple,
             jets = 'jets',
+            method = 'simple',
             track_selection = track_selection_function,
             resolution = aleph_resolution
         )
@@ -68,6 +69,7 @@ def jets_sequence(number_jets, detector_name):
         ip_simple = cfg.Analyzer(
             ImpactParameterSimple,
             jets = 'jets',
+            method = 'simple',
             track_selection = track_selection_function,
             resolution = ild_resolution
         )
