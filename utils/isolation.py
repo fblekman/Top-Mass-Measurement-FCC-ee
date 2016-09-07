@@ -86,7 +86,6 @@ class IsolationComputer(object):
         if off_areas is None:
             off_areas = []
         self.off_areas = off_areas
-        self.pt_thresh = pt_thresh
         self.e_thresh = e_thresh
         self.label = label
 
@@ -108,7 +107,7 @@ class IsolationComputer(object):
                 print
                 print ptc
                 print delta_alpha(lepton, ptc)
-            if ptc.e()<self.e_thresh or ptc.pt()<self.pt_thresh:
+            if ptc.e()<self.e_thresh:
                 continue
             is_on = False
             for area in self.on_areas:
