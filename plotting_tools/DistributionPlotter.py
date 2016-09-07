@@ -7,8 +7,8 @@ class DistributionPlotter(object):
     After initializing the class you can add a variable number of datasets uising
     the add_entry method. A new dataset is automatically drawn in top of the others.
 
-    #TODO: integration with the DataSet class!
     #TODO: check correct rescaling of data set with cuts
+    #TODO: add_entry method can be updated better using the dataset class
     """
 
     def __init__(self, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm = False, logy = False, stack = False, set_title = True):
@@ -44,13 +44,22 @@ class DistributionPlotter(object):
         if self.stack == False:
             self.maxs_histograms = []
         else:
-            self.h_stack = THStack("h_stack_" + self.name, self.title)
+            if self.set_title == True:
+                aux_title = self.title
+            else:
+                aux_title = self.variable + " {" + self.cut + "}"
+            self.h_stack = THStack("h_stack_" + self.name, aux_title)
 
-    def add_entry(self, tree, name, legend_title, n_events = None):
+
+    def add_entry(self, tree, name, legend_name, n_events = None):
         self.dataset[0].append(tree)
         self.dataset[1].append(name)
 
-        histogram = TH1D("h_" + name, self.variable + " {" + self.cut + "}", self.nbin, self.xmin, self.xmax)
+        if self.set_title == True:
+            aux_title = self.title
+        else:
+            aux_title = self.variable + " {" + self.cut + "}"
+        histogram = TH1D("h_" + name, aux_title, self.nbin, self.xmin, self.xmax)
         self.dataset[0][-1].Project("h_" + name, self.variable, self.cut)
 
         histogram_aux = TH1D("h_aux_" + name, self.variable + " {" + self.cut + "}", self.nbin, self.xmin, self.xmax)
@@ -91,7 +100,7 @@ class DistributionPlotter(object):
         self.canvas.cd()
         if self.stack == False:
             histogram.SetLineColor(i+1)
-            self.leg.AddEntry(histogram, legend_title, "l")
+            self.leg.AddEntry(histogram, legend_name, "l")
             histogram.Draw("same")
             self.maxs_histograms.append(histogram.GetBinContent(histogram.GetMaximumBin()) )
             self.histograms[0].SetMaximum( 1.2*max(self.maxs_histograms))
@@ -100,7 +109,7 @@ class DistributionPlotter(object):
             histogram.SetLineWidth(1)
             histogram.SetFillColor(i+1)
             histogram.SetFillStyle(3000 + i)
-            self.leg.AddEntry(histogram, legend_title, "f")
+            self.leg.AddEntry(histogram, legend_name, "f")
             self.h_stack.Add(histogram)
             self.h_stack.Draw()
 
@@ -115,7 +124,12 @@ class DistributionPlotter(object):
         self.leg.Draw("same")
         self.canvas.Update()
 
+    def add_entry_with_dataset(self, dataset):
+        self.add_entry(dataset.tree, dataset.name + "_" + self.name, dataset.legend_name, dataset.n_event)
 
+    def add_dataset_list(self, dataset_list):
+        for dataset in dataset_list:
+            self.add_entry_with_dataset(dataset)
 
     def save_pdf(self, dir_name):
         self.canvas.Print(dir_name + self.name + ".pdf", "pdf")
