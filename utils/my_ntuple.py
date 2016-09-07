@@ -59,7 +59,7 @@ def bookMyJet( tree, pName ):
 
     var(tree, '{pName}_n_signif_larger3'.format(pName = pName))
     var(tree, '{pName}_m_inv_signif_larger3'.format(pName = pName))
-    var(tree, '{pName}_angle_wrt_jet_dir_larger'.format(pName = pName))
+    var(tree, '{pName}_angle_wrt_jet_dir_larger3'.format(pName = pName))
     var(tree, '{pName}_combined_b_tag'.format(pName = pName))
 
     var(tree, '{pName}_mc_b_quark_index'.format(pName = pName))
@@ -80,7 +80,7 @@ def fillMyJet( tree, pName, jet ):
     if hasattr(jet, 'n_signif_larger3'):
         fill(tree, '{pName}_n_signif_larger3'.format(pName = pName), jet.n_signif_larger3)
         fill(tree, '{pName}_m_inv_signif_larger3'.format(pName = pName), jet.m_inv_signif_larger3)
-        fill(tree, '{pName}_angle_wrt_jet_dir_larger'.format(pName = pName), jet.angle_wrt_jet_dir_larger)
+        fill(tree, '{pName}_angle_wrt_jet_dir_larger3'.format(pName = pName), jet.angle_wrt_jet_dir_larger3)
 
     if hasattr(jet, 'combined_b_tag'):
         fill(tree, '{pName}_combined_b_tag'.format(pName = pName), jet.combined_b_tag)
