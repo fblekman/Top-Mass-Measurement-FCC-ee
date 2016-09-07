@@ -16,7 +16,7 @@ random.seed(0xdeadbeef)
 comp_ttlep = cfg.Component(
     'tt_dilep_ILD',
     files = [
-        'pythia_gen/ee_ttlep_350GeV.root'
+        'raw_ntuple/pythia_gen/ee_ttlep_350GeV.root'
     ]
 )
 

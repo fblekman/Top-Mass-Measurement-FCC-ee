@@ -16,7 +16,7 @@ random.seed(0xdeadbeef)
 comp_hz = cfg.Component(
     'hz_ILD',
     files = [
-        'pythia_gen/ee_HZ_350GeV.root'
+        'raw_ntuple/pythia_gen/ee_HZ_350GeV.root'
     ]
 )
 

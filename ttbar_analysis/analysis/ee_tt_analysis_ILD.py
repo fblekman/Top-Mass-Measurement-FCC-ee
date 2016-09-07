@@ -18,7 +18,7 @@ random.seed(0xdeadbeef)
 comp_tt = cfg.Component(
     'tt_semilep_ILD',
     files = [
-        'lhe/eett_semilep_350GeV2.root'
+        'raw_ntuple/lhe/eett_semilep_350GeV2.root'
     ]
 )
 
