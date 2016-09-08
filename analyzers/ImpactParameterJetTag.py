@@ -153,7 +153,8 @@ class ImpactParameterJetTag(Analyzer):
                     elif sign == 0:
                         track_list.append(ptc)
 
-        totalp4 = reduce(lambda total, particle: total + particle.p4(), track_list, TLorentzVector(0., 0., 0., 0.))
+        totalp4 = reduce(lambda total, particle: total + particle.p4(), 
+                         track_list, TLorentzVector(0., 0., 0., 0.))
         angle_totalp4_wrt_jet = totalp4.Angle(jet.p3())
 
         return len(track_list), totalp4.M(), angle_totalp4_wrt_jet

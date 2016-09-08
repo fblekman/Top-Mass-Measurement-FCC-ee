@@ -1,5 +1,5 @@
 def second_smallest_number(my_list):
-    """Next to the smallest number in alist of numbers."""
+    """Next to the smallest number in a list of numbers."""
     minimum = min(my_list)
     second_min = max(my_list)
     index_second_min = -1

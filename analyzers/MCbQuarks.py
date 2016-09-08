@@ -44,7 +44,7 @@ class MCbQuarks(Analyzer):
             if min(mc_b_quarks[0].delta_alpha_wrtJets) <= min(mc_b_quarks[1].delta_alpha_wrtJets):
                 index_nearest_jet2 = second_smallest_number(mc_b_quarks[1].delta_alpha_wrtJets)[1]
 
-            elif min(mc_b_quarks[0].delta_alpha_wrtJets) > min(mc_b_quarks[1].delta_alpha_wrtJets):
+            else:
                 index_nearest_jet1 = second_smallest_number(mc_b_quarks[0].delta_alpha_wrtJets)[1]
 
 

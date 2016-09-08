@@ -4,7 +4,7 @@ from math import atan, log, cos, sin, sqrt
 from ROOT import TLorentzVector
 from copy import copy, deepcopy
 
-class topConstrainer:
+class topConstrainer(object):
     """Kinematic contrainer for ttbar semileptonic decay.
 
     Giving it the 4momenta of the jets, and the lepton, the btags of the jets,

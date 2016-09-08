@@ -1,5 +1,6 @@
 from heppy.framework.analyzer import Analyzer
 from utils.delta_alpha import delta_alpha
+from utils.second_smallest_number import second_smallest_number
 
 class MCZQuarksMatching(Analyzer):
     '''
@@ -13,18 +14,6 @@ class MCZQuarksMatching(Analyzer):
     '''
 
     def process(self, event):
-
-        def second_smallest_number(my_list):
-            minimum = min(my_list)
-            second_min = max(my_list)
-            index_second_min = -1
-            for i, element in enumerate(my_list):
-                if element <= second_min and element > minimum:
-                    second_min = element
-                    index_second_min = i
-            return second_min, index_second_min
-
-
         gen_particles = event.gen_particles
 
         mc_Z_quarks = []

@@ -7,8 +7,6 @@ class CutsYieldPrinter(object):
     It integrates with the DataSet Class.
     The class contains a lot of methods to generate the various lines of the table code;
     these are of course very customizable.
-
-    TODO: print table method?
     """
 
     def __init__(self, dataset_list, cut_list, caption = None):
@@ -53,7 +51,7 @@ class CutsYieldPrinter(object):
     def AddGeneratedEvents(self):
         generated_events_line_string_list = ["Generated events"]
         for dataset in self.dataset_list:
-            generated_events_line_string_list.append(str(dataset.n_gen))
+            generated_events_line_string_list.append(str(dataset.n_generated()))
         self.table_list.append(generated_events_line_string_list)
 
     def ComputeYields(self):
@@ -61,7 +59,7 @@ class CutsYieldPrinter(object):
         for cumulative_cut in self.cumulative_cuts:
             aux_yields_list = []
             for dataset in self.dataset_list:
-                aux_yields_list.append(str( int( dataset.cut_efficiency(cumulative_cut) * dataset.n_gen_with_eff ) ) )
+                aux_yields_list.append(str( dataset.n_generated_with_eff(cumulative_cut) ) )
             self.yields.append(aux_yields_list)
 
     def WriteYields(self):

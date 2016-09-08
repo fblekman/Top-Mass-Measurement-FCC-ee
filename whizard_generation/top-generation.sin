@@ -1,0 +1,31 @@
+model = SM
+process tt = e1, E1 => t, T     ### This is the on-shell process
+process wbwb = e1, E1 => Wp, b, Wm, B   ### Incl. top decays
+##
+# process
+mb = 4.2 GeV
+mtop = 173.1 GeV
+sqrts = 350 GeV
+beams = e1, E1
+### This will simulate inclusive ISR photon emission
+# beams = e1, E1 => isr
+integrate (tt, wbwb)
+
+### Switch on shower and hadronization
+# $shower_method = "PYTHIA6"
+# ?ps_fsr_active = true
+# ?hadronization_active = true
+
+n_events = 1000
+### Alternatively specify integrated luminosity
+# luminosity = 100 / fb
+
+sample_format = stdhep
+## or other options
+# sample_format = lcio    ### if linked
+# sample_format = hepmc ### if linked
+# sample_format = lhef
+
+simulate (tt)
+## or
+# simulate (wbwb)
