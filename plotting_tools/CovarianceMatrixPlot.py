@@ -26,15 +26,27 @@ def covarianceMatrixEllipse(covarianceMatrix, probability=0.683):
 
     return ellipse, scale
 
-def combineCova(cova1,cova2):
+def combineTwoCovarianceMatrices(cova1,cova2):
     """Combine two covariance matrices.
 
     The arguments must be numpy 2-D array.
-    
-    TODO: extend to a list of covariance matrices?
+    I would say deprecated.
     """
     inv1 = np.linalg.inv(cova1)
     inv2 = np.linalg.inv(cova2)
     aux = inv1+inv2
     aux2 = np.linalg.inv(aux)
     return aux2
+
+def combineCovarianceMatrices(covariance_matrix_list):
+    """Combine two covariance matrices.
+
+    The arguments must be numpy 2-D array.
+    """
+    inverse_matrices = []
+    for covariance_matrix in covariance_matrix_list:
+        inverse_matrices.append( np.linalg.inv(covariance_matrix) )
+
+    alpha = sum(inverse_matrices)
+    inverse_alpha = np.linalg.inv(alpha)
+    return inverse_alpha

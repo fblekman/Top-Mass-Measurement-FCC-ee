@@ -125,7 +125,7 @@ class DistributionPlotter(object):
         self.canvas.Update()
 
     def add_entry_with_dataset(self, dataset):
-        self.add_entry(dataset.tree, dataset.name + "_" + self.name, dataset.legend_name, dataset.n_event)
+        self.add_entry(dataset.tree, dataset.name + "_" + self.name, dataset.legend_name, dataset.n_expected())
 
     def add_dataset_list(self, dataset_list):
         for dataset in dataset_list:

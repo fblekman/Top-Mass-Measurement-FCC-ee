@@ -2,8 +2,6 @@ class DataSet(object):
     """Store data sample with methods to obtain the rescaled number of events,
     and the fraction that passes a given cut.
 
-    TODO: add methods to obtain directly the number of events expected after rescaling
-    with a given cut.
     """
 
     def __init__(self, tree, name, legend_name, cross_section, luminosity, generator = None, efficiency = None):
@@ -19,12 +17,20 @@ class DataSet(object):
         else:
             self.efficiency = efficiency
 
-        self.n_gen_with_eff = self.tree.GetEntries()
-        self.n_gen = int( float(self.n_gen_with_eff) / self.efficiency )
-
-        self.n_event_with_eff = int( self.cross_section * self.luminosity * self.efficiency )
-        self.n_event = int( self.cross_section * self.luminosity )
+        self.n_entries = self.tree.GetEntries()
 
     def cut_efficiency(self, cut):
         """Fraction of events passing a given cut"""
-        return float(self.tree.GetEntries(cut) ) / self.n_gen_with_eff
+        return float(self.tree.GetEntries(cut) ) / self.n_entries
+
+    def n_generated_with_eff(self, cut = ""):
+        return self.tree.GetEntries(cut)
+
+    def n_generated(self, cut = ""):
+        return int( float(self.tree.GetEntries(cut)) / self.efficiency )
+
+    def n_expected_with_eff(self, cut = ""):
+        return int( self.cut_efficiency(cut) * self.cross_section * self.luminosity * self.efficiency )
+
+    def n_expected(self, cut = ""):
+        return int( self.cut_efficiency(cut) * self.cross_section * self.luminosity )
