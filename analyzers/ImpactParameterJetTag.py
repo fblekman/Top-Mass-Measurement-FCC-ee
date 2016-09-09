@@ -7,8 +7,7 @@ from utils.computeIP import *
 from utils.ComputeMVA import ComputeMVA
 
 class ImpactParameterJetTag(Analyzer):
-    """
-    Compute impact paramaters for every charged track and combine them to obtain b-tag variables for every jet inside the event.
+    """Compute impact paramaters for every charged track and combine them to obtain b-tag variables for every jet inside the event.
 
     The analyzer requires a resolution function for the impact parameter and a track selection function.
 
@@ -153,7 +152,7 @@ class ImpactParameterJetTag(Analyzer):
                     elif sign == 0:
                         track_list.append(ptc)
 
-        totalp4 = reduce(lambda total, particle: total + particle.p4(), 
+        totalp4 = reduce(lambda total, particle: total + particle.p4(),
                          track_list, TLorentzVector(0., 0., 0., 0.))
         angle_totalp4_wrt_jet = totalp4.Angle(jet.p3())
 

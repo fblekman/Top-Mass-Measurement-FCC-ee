@@ -187,6 +187,8 @@ class vertex_displayer(object):
         that point. It requires to have run the function compute_IP_wrt_direction
         on the helix object.
         """
+        self.name = name
+        self.title = title
         self.helix = helix
         self.ip_algorithm = ip_algorithm
 
