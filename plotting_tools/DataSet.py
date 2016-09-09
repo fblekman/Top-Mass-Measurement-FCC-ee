@@ -1,10 +1,10 @@
 class DataSet(object):
     """Store data sample with methods to obtain the rescaled number of events,
     and the fraction that passes a given cut.
-
     """
 
     def __init__(self, tree, name, legend_name, cross_section, luminosity, generator = None, efficiency = None):
+        
         self.tree = tree
         self.name = name
         self.legend_name = legend_name

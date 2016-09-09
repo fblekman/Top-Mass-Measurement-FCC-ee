@@ -3,14 +3,29 @@ from ROOT import TEllipse, TCanvas, TGraph, TLegend
 from plotting_tools.TopMassStyle import TopMassStyle
 
 class CovarianceMatrix2DContourPlot(object):
-    """
+    """2D confidence interval contour plot.
+
+    This is a base class to plot, given a 2D fit result, the contour region (that
+    is an ellipse in the gaussian likelihood approximation) relative to a given
+    confidence level, on the two dimensional space parameters.
 
     TODO: extend the class to plot more than one covariance_matrix!
     TODO: raise exceptions in the init code instead of printing some erros message!
+    TODO: would a name like PlotFitResult be nicer?
     """
 
     def __init__(self, name, fit_parameters, covariance_matrix, args = dict(sigma = 1)):
-        """ """
+        """Constructor with the fit output.
+
+        Provide the constructor with the following objects:
+        - name: identificative name for ROOT objects
+        - fit_parameters: numpy array (shape 1,2) containing the two paramters of the fit
+        - covariance_matrix: numpy array (shape 2,2) containing the covariance matrix of the fit
+        - args: dictionary to specify the type of plot you want:
+        It can be:
+        - dict(sigma = 1)
+        - dict(probability = 0.68)
+        """
         self.name = name
         self.fit_parameters = fit_parameters
         self.covariance_matrix = covariance_matrix
