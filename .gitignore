@@ -6,3 +6,4 @@
 *.pyc
 
 ttbar_analysis/ntuple
+test/b_tagging_ntuple/
