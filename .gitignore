@@ -4,6 +4,7 @@
 *.png
 *.eps
 *.pyc
+.ipynb_checkpoints
 
 ttbar_analysis/ntuple
 test/b_tagging_ntuple/
