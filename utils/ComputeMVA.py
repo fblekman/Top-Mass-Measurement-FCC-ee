@@ -48,7 +48,6 @@ class ComputeMVA(object):
             print
 
         for variable in self.variables_list:
-
             mean_background = get_mean(self.background_tree_training, variable)
             mean_signal = get_mean(self.signal_tree_training, variable)
 
@@ -69,15 +68,17 @@ class ComputeMVA(object):
         self.canvases = []
         self.legendes = []
 
+        TopMassStyle()
+
     def ComputePvalue(self, point):
 
         string_list = []
-        for variable, variable_sign in zip(variables_list, variables_signs):
+        for variable, variable_sign, point_component in zip(self.variables_list, self.variables_signs, point):
             if variable_sign == 1:
                 sign = ">="
             elif variable_sign == -1:
                 sign = "<="
-            string_list.append(variable + sign + str(point[i]))
+            string_list.append(variable + sign + str(point_component))
 
         join_cuts = " && "
         cut_string = join_cuts.join(string_list)
@@ -208,6 +209,47 @@ class ComputeMVA(object):
         self.legendes.append( legend )
         self.canvases.append( canvas )
 
+    def DrawRawVariables(self):
+
+        self.raw_variables_canvases = []
+        self.raw_var_background_histo = []
+        self.raw_var_signal_histo = []
+        self.raw_var_legendes = []
+
+        for variable in self.variables_list:
+            raw_variable_canvas = TCanvas("c_" + variable, variable, 800, 600)
+            raw_variable_canvas.cd()
+            raw_variable_canvas.SetGrid()
+
+            self.raw_variables_canvases.append(raw_variable_canvas)
+
+            h_background = TH1D("h_background_" + variable, variable, 30, 0. , 15)
+            self.background_tree_training.Project("h_background_" + variable, variable)
+            h_background.SetLineColor(2)
+            h_background.SetStats(kFALSE)
+
+            h_signal = TH1D("h_signal_" + variable, variable, 30, 0. , 15)
+            self.signal_tree_training.Project("h_signal_" + variable, variable)
+            h_signal.SetLineColor(4)
+            h_signal.SetStats(kFALSE)
+
+            h_signal.GetXaxis().SetTitle(variable)
+            h_signal.GetYaxis().SetTitle("Normalized entries / {:3.2f} ".format(h_signal.GetBinWidth(1)) )
+
+            h_background.Scale(1./h_background.Integral())
+            h_signal.Scale(1./h_signal.Integral())
+
+            legend = TLegend(0.7,0.6,0.9,0.8)
+            legend.AddEntry(h_background, "background", "l")
+            legend.AddEntry(h_signal, "signal", "l")
+
+            h_signal.Draw()
+            h_background.Draw("same")
+            legend.Draw("same")
+
+            self.raw_var_background_histo.append( h_background )
+            self.raw_var_signal_histo.append( h_signal )
+            self.raw_var_legendes.append( legend )
 
     def Perform(self):
         self.Training()
@@ -218,8 +260,6 @@ class ComputeMVA(object):
         self.RocCurve(self.transformed_discriminating_tree, "after_transf", "")
 
 if __name__ == '__main__':
-
-    TopMassStyle()
 
     # analysis = "tt"
     analysis = "b-tag"
