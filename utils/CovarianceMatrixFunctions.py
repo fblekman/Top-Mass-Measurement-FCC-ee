@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def CombineCovarianceMatrices(covariance_matrix_list):
     """Combine two covariance matrices.
 
@@ -19,6 +20,7 @@ def CombineCovarianceMatrices(covariance_matrix_list):
     alpha = sum(inverse_matrices)
     inverse_alpha = np.linalg.inv(alpha)
     return inverse_alpha
+
 
 def CombineFitParameters(fit_parameters_list, covariance_matrix_list):
     """Combine fit parameters from a list of measurements.
@@ -48,7 +50,8 @@ def RotateCovarianceMatrix(covariance_matrix, rotation_matrix):
     """Change variables of a covariance matrix.
 
     rotation_matrix is the matrix that, given the new variables, returns the old ones.
-    The change of variables is done by applying the rotation_matrix to the inverse of the covariance_matrix in the following way: rot^T * cova^-1 * rot
+    The change of variables is done by applying the rotation_matrix to the
+    inverse of the covariance_matrix in the following way: rot^T * cova^-1 * rot
     and then inverting again the result to obtain the new covariance matrix.
 
     The arguments must be:
