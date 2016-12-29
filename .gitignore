@@ -5,7 +5,9 @@
 *.eps
 *.pyc
 .ipynb_checkpoints
+.idea
 
 ttbar_analysis/ntuple
 test/b_tagging_ntuple/
 todo_nick.md
+venv
