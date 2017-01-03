@@ -4,7 +4,7 @@ from plotting_tools.TopMassStyle import TopMassStyle
 class DistributionPlotter(object):
     """Class to plot distribution of variables with various options.
 
-    After initializing the class you can add a variable number of datasets uising
+    After initializing the class you can add a variable number of datasets using
     the add_entry method. A new dataset is automatically drawn in top of the others.
 
     #TODO: check correct rescaling of data set with cuts
