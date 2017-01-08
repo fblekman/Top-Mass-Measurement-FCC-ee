@@ -8,10 +8,9 @@ class DistributionPlotter(object):
     the add_entry method. A new dataset is automatically drawn in top of the others.
 
     #TODO: check correct rescaling of data set with cuts
-    #TODO: add_entry method can be updated better using the dataset class
     """
 
-    def __init__(self, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm = False, logy = False, stack = False, set_title = True):
+    def __init__(self, variable, cut, name, nbin, xmin, xmax, title, xtitle, ytitle_unity_measure, norm=False, logy=False, stack=False, set_title=True):
 
         TopMassStyle()
 
@@ -51,7 +50,7 @@ class DistributionPlotter(object):
             self.h_stack = THStack("h_stack_" + self.name, aux_title)
 
 
-    def add_entry(self, tree, name, legend_name, n_events = None):
+    def add_entry(self, tree, name, legend_name, n_events=None):
         self.dataset[0].append(tree)
         self.dataset[1].append(name)
 
@@ -122,7 +121,7 @@ class DistributionPlotter(object):
 
 
         self.leg.Draw("same")
-        self.canvas.Update()
+        self.canvas.Draw()
 
     def add_entry_with_dataset(self, dataset):
         self.add_entry(dataset.tree, dataset.name + "_" + self.name, dataset.legend_name, dataset.n_expected())
